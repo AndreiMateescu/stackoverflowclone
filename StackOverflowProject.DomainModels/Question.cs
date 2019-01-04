@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StackOverflowProject.DomainModels
 {
-    class Question
+    public class Question
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
