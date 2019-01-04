@@ -22,7 +22,7 @@ namespace StackOverflowProject.DomainModels
 
         public string Mobile { get; set; }
 
-        public string IsAdmin { get; set; }
+        public bool IsAdmin { get; set; }
 
     }
 }
