@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="CategoriesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuestionsRepository.cs" />
     <Compile Include="UsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>
