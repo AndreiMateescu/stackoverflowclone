@@ -1,10 +1,10 @@
-﻿@using System.Web.Optimization;
-<!DOCTYPE html>
+﻿@using System.Web.Optimization
 
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <title>@ViewBag.Title - StackOverflow</title>
     @Styles.Render("~/Styles/bootstrap")
     @Styles.Render("~/Styles/site")
@@ -15,6 +15,7 @@
         <nav class="navbar navbar-expand-sm text-light navbar-light">
             <a class="navbar-brand" href="#">StackOverflow</a>
 
+
             <button class="navbar-toggler" data-toggle="collapse" data-target="#collapsibleNavBar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -24,34 +25,34 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="/home/index">Home</a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/home/abount">Abount</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home/about">About</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/home/contact">Contact</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/home/categories">Categories</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/allquestions">Questions</a>
                     </li>
-
                     @if (Session["CurrentUserName"] == null)
                     {
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/account/login">Logim</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/login">Login</a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="/account/register">Register</a>
                         </li>
                     }
 
-                    @if(Session["CurrentUserName"] != null)
+                    @if (Session["CurrentUserName"] != null)
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                                <img src="~/Images/user" width="20px" />
+                                <img src="~/Images/user.png" width="20px" />
+                                @Session["CurrentUserName"]
                             </a>
                             <div class="dropdown-menu bg-info">
                                 <a class="dropdown-item" href="/account/logout">Logout</a>
@@ -64,7 +65,7 @@
             </div>
 
             <form class="form-inline" action="/home/search">
-                <input type="text" class="form-control mr-sm-2" style="width: 150px" placeholder="Search" name="str" />
+                <input type="search" class="form-control mr-sm-2" style="width:150px" placeholder="Search" name="str">
                 <button class="btn btn-success">Search</button>
             </form>
         </nav>
@@ -72,3 +73,5 @@
     </div>
 </body>
 </html>
+
+
