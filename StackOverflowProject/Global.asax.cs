@@ -7,6 +7,8 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
+using System.Web.Optimization;
+using StackOverflowProject.App_Start;
 
 namespace StackOverflowProject
 {
@@ -16,6 +18,7 @@ namespace StackOverflowProject
         {
             // Code that runs on application startup
             AreaRegistration.RegisterAllAreas();
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);            
         }
