@@ -16,7 +16,7 @@ namespace StackOverflowProject.Repositories
         void UpdateQuestionViewsCount(int questionID, int value);
         void DeleteQuestion(int questionID);
         List<Question> GetQuestions();
-        List<Question> GetQuestionsByQuestionID(int questionID);
+        List<Question> GetQuestionByQuestionID(int questionID);
     }
 
     public class QuestionsRepository : IQuestionRepository
@@ -43,7 +43,7 @@ namespace StackOverflowProject.Repositories
             return db.Questions.ToList();
         }
 
-        public List<Question> GetQuestionsByQuestionID(int questionID)
+        public List<Question> GetQuestionByQuestionID(int questionID)
         {
             return db.Questions.Where(temp => temp.QuestionID == questionID).ToList();
         }
