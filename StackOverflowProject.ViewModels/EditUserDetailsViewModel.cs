@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StackOverflowProject.ViewModels
 {
-    class EditUserDetailsViewModel
+    public class EditUserDetailsViewModel
     {
         [Required]
         [RegularExpression(@"(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})")]
