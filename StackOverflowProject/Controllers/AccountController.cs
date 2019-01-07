@@ -23,6 +23,7 @@ namespace StackOverflowProject.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Register(RegisterViewModel rvm)
         {
@@ -42,5 +43,51 @@ namespace StackOverflowProject.Controllers
                 return View();
             }
         }
+
+        public ActionResult Login()
+        {
+            LoginViewModel lvm = new LoginViewModel();
+            return View(lvm);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Login(LoginViewModel lvm)
+        {
+            if(ModelState.IsValid)
+            {
+                UserViewModel uvm = this.us.GetUsersByEmailAndPassword(lvm.Email, lvm.Password);
+                if(uvm != null)
+                {
+                    Session["CurrentUserID"] = uvm.UserID;
+                    Session["CurrentUserName"] = uvm.Name;
+                    Session["CurrentUserEmail"] = uvm.Email;
+                    Session["CurrentUserPassword"] = uvm.Password;
+                    Session["CurrentUserIsAdmin"] = uvm.IsAdmin;
+
+                    if(uvm.IsAdmin)
+                    {
+                        return RedirectToRoute(new { area = "admin", controller = "AdminHome", action = "Index" });
+                    }
+                    else
+                    {
+                        return RedirectToRoute("Index", "Home");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("x", "Invalid Email / Password");
+                    return View(lvm);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("x", "Invalid Data");
+                return View(lvm);
+            }
+
+            return View(lvm);
+        }
+
     }
 }
