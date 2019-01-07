@@ -39,6 +39,7 @@ namespace StackOverflowProject.Controllers
             return View(this.cs.GetCategories());
         }
 
+        [Route("allquestions")]
         public ActionResult Questions()
         {
             return View(this.qs.GetQuestions());
