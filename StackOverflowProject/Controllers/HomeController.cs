@@ -21,5 +21,15 @@ namespace StackOverflowProject.Controllers
         {
             return View(this.qs.GetQuestions().Take(10).ToList());
         }
+
+        public ActionResult About()
+        {
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            return View();
+        }
     }
 }
