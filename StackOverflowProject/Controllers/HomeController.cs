@@ -10,10 +10,12 @@ namespace StackOverflowProject.Controllers
     public class HomeController : Controller
     {
         IQuestionsService qs;
+        ICategoriesService cs;
 
-        public HomeController(IQuestionsService qs)
+        public HomeController(IQuestionsService qs, ICategoriesService cs)
         {
             this.qs = qs;
+            this.cs = cs;
         }
 
         // GET: Home
@@ -30,6 +32,11 @@ namespace StackOverflowProject.Controllers
         public ActionResult Contact()
         {
             return View();
+        }
+
+        public ActionResult Categories()
+        {
+            return View(this.cs.GetCategories());
         }
     }
 }
