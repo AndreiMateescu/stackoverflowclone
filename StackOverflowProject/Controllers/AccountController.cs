@@ -118,5 +118,30 @@ namespace StackOverflowProject.Controllers
                 return View(eudvm);
             }
         }
+
+        public ActionResult ChangePassword()
+        {
+            int uid = Convert.ToInt32(Session["CurrentUserID"]);
+            UserViewModel uvm = this.us.GetUsersByUserID(uid);
+            EditUserPasswordViewModel eudpvm = new EditUserPasswordViewModel() { Email = uvm.Email, Password = "", ConfirmPassword = "", UserID = uvm.UserID };
+            return View(eudpvm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(EditUserPasswordViewModel eupvm)
+        {
+            if (ModelState.IsValid)
+            {
+                eupvm.UserID = Convert.ToInt32(Session["CurrentUserID"]);
+                this.us.UpdateUserPassword(eupvm);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("x", "Invalid data");
+                return View(eupvm);
+            }
+        }
     }
 }
