@@ -85,8 +85,12 @@ namespace StackOverflowProject.Controllers
                 ModelState.AddModelError("x", "Invalid Data");
                 return View(lvm);
             }
+        }
 
-            return View(lvm);
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Index", "Home");
         }
 
     }
