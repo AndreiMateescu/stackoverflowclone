@@ -1,5 +1,6 @@
-﻿.navbar {
-    background-color: #046575;l
+﻿.navbar
+{
+    background-color: #046475;
 }
 
 #active
@@ -12,9 +13,9 @@
     color: white !important;
 }
 
-navbar a:hover
+.navbar a:hover
 {
-    color: Odedd1 !important;
+    color: #0dedd1 !important;
     text-decoration: underline;
 }
 
@@ -23,7 +24,7 @@ navbar a:hover
     color: black !important;
 }
 
-.hidden 
+.hidden
 {
     display: none;
 }
@@ -35,3 +36,4 @@ navbar a:hover
     margin-top: 100px;
     padding: 40px;
 }
+

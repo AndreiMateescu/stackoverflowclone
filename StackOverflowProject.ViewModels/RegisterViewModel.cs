@@ -21,7 +21,6 @@ namespace StackOverflowProject.ViewModels
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
 
-
         [Required]
         [RegularExpression(@"^[a-zA-Z ]*$")]
         public string Name { get; set; }
@@ -30,3 +29,5 @@ namespace StackOverflowProject.ViewModels
         public string Mobile { get; set; }
     }
 }
+
+

@@ -1,9 +1,9 @@
 ﻿@model StackOverflowProject.ViewModels.QuestionViewModel
 
 <tr>
-    <td><span class="badge badge-secondary">@Model.VotesCount</span> votes</td>
-    <td><span class="badge badge-secondary">@Model.AnswersCount</span> answers</td>
-    <td><span class="badge badge-secondary">@Model.ViewsCount</span> views</td>
+    <td><span class="badge badge-secondary">@Model.VotesCount</span> Votes</td>
+    <td><span class="badge badge-secondary">@Model.AnswersCount</span> Answers</td>
+    <td><span class="badge badge-secondary">@Model.ViewsCount</span> Views</td>
     <td class="text-dark">
         <a href="/questions/view/@Model.QuestionID" class="text-primary">@Model.QuestionName</a>
         <br />
@@ -12,12 +12,15 @@
     <td>
         @if (Convert.ToInt32(Session["CurrentUserID"]) != Model.UserID)
         {
-            @: by @Model.User.Name
+            @:by @Model.User.Name
         }
         else
         {
-            @: by you
+            @:by you
         }
     </td>
-    <td>on @Model.QuestionDateAndTime</td>
+    <td>
+        on @Model.QuestionDateAndTime
+    </td>
 </tr>
+

@@ -14,13 +14,15 @@ namespace StackOverflowProject.ServiceLayer
             using (SHA256 sha256Hash = SHA256.Create())
             {
                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(inputData));
-                StringBuilder stringBuilder = new StringBuilder();
-                for (int i=0; i < bytes.Length; i++)
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
                 {
-                    stringBuilder.Append(bytes[i].ToString("x2"));
+                    builder.Append(bytes[i].ToString("x2"));
                 }
-                return stringBuilder.ToString();
+                return builder.ToString();
             }
         }
     }
 }
+
+

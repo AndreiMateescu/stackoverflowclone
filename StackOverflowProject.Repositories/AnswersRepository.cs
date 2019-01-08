@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StackOverflowProject.DomainModels;
 
 namespace StackOverflowProject.Repositories
 {
     public interface IAnswersRepository
     {
-        void InsertAnswer(Answer answer);
-        void UpdateAnswer(Answer answer);
-        void UpdateAnswerVotesCount(int answerID, int userID, int value);
-        void DeleteAnswer(int answerID);
-        List<Answer> GetAnswersByQuestionID(int questionID);
-        List<Answer> GetAnswersByAnswerID(int answerID);
+        void InsertAnswer(Answer a);
+        void UpdateAnswer(Answer a);
+        void UpdateAnswerVotesCount(int aid, int uid, int value);
+        void DeleteAnswer(int aid);
+        List<Answer> GetAnswersByQuestionID(int qid);
+        List<Answer> GetAnswersByAnswerID(int AnswerID);
     }
-
     public class AnswersRepository : IAnswersRepository
     {
         StackOverflowDatabaseDbContext db;
@@ -29,55 +26,59 @@ namespace StackOverflowProject.Repositories
             qr = new QuestionsRepository();
             vr = new VotesRepository();
         }
-
-        public void DeleteAnswer(int answerID)
+        
+        public void InsertAnswer(Answer a)
         {
-            var ans = db.Answers.Where(temp => temp.AnswerID == answerID).FirstOrDefault();
-            if(ans != null)
+            db.Answers.Add(a);
+            db.SaveChanges();
+            qr.UpdateQuestionAnswersCount(a.QuestionID, 1);
+        }
+
+        public void UpdateAnswer(Answer a)
+        {
+            Answer ans = db.Answers.Where(temp => temp.AnswerID == a.AnswerID).FirstOrDefault();
+            if (ans != null)
+            {
+                ans.AnswerText = a.AnswerText;
+                db.SaveChanges();
+            }
+        }
+
+        public void UpdateAnswerVotesCount(int aid, int uid, int value)
+        {
+            Answer ans = db.Answers.Where(temp => temp.AnswerID == aid).FirstOrDefault();
+            if (ans != null)
+            {
+                ans.VotesCount += value;
+                db.SaveChanges();
+                qr.UpdateQuestionVotesCount(ans.QuestionID, value);
+                vr.UpdateVote(aid, uid, value);
+            }
+        }
+
+        public void DeleteAnswer(int aid)
+        {
+            Answer ans = db.Answers.Where(temp => temp.AnswerID == aid).First();
+            if (ans != null)
             {
                 db.Answers.Remove(ans);
                 db.SaveChanges();
                 qr.UpdateQuestionAnswersCount(ans.QuestionID, -1);
             }
         }
-
-        public List<Answer> GetAnswersByAnswerID(int answerID)
+        public List<Answer> GetAnswersByQuestionID(int qid)
         {
-            return db.Answers.Where(temp => temp.AnswerID == answerID).ToList();
+            List<Answer> ans = db.Answers.Where(temp => temp.QuestionID == qid).OrderByDescending(temp => temp.AnswerDateAndTime).ToList();
+            return ans;
         }
-
-        public List<Answer> GetAnswersByQuestionID(int questionID)
+        public List<Answer> GetAnswersByAnswerID(int aid)
         {
-            return db.Answers.Where(temp => temp.QuestionID == questionID).ToList();
-        }
-
-        public void InsertAnswer(Answer answer)
-        {
-            db.Answers.Add(answer);
-            db.SaveChanges();
-            qr.UpdateQuestionAnswersCount(answer.QuestionID, 1);
-        }
-
-        public void UpdateAnswer(Answer answer)
-        {
-            var ans = db.Answers.Where(temp => temp.AnswerID == answer.AnswerID).FirstOrDefault();
-            if(ans != null)
-            {
-                ans.AnswerText = answer.AnswerText;
-                db.SaveChanges();
-            }
-        }
-
-        public void UpdateAnswerVotesCount(int answerID, int userID, int value)
-        {
-            var ans = db.Answers.Where(temp => temp.AnswerID == answerID).FirstOrDefault();
-            if (ans != null)
-            {
-                ans.VotesCount += value;
-                db.SaveChanges();
-                qr.UpdateQuestionVotesCount(ans.QuestionID, value);
-                vr.UpdateVote(answerID, userID, value);
-            }
+            List<Answer> ans = db.Answers.Where(temp => temp.AnswerID == aid).ToList();
+            return ans;
         }
     }
 }
+
+
+
+

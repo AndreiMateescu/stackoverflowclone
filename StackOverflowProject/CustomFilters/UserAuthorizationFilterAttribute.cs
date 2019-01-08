@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace StackOverflowProject.CustomFilters
 {
-    public class UserAuthorizationFilterAttribute : FilterAttribute, IAuthorizationFilter
+    public class UserAuthorizationFilterAttribute: FilterAttribute, IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationContext filterContext)
         {

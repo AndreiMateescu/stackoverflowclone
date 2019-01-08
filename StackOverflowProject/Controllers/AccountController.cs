@@ -17,8 +17,6 @@ namespace StackOverflowProject.Controllers
         {
             this.us = us;
         }
-
-        // GET: Account
         public ActionResult Register()
         {
             return View();
@@ -51,14 +49,14 @@ namespace StackOverflowProject.Controllers
             return View(lvm);
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel lvm)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 UserViewModel uvm = this.us.GetUsersByEmailAndPassword(lvm.Email, lvm.Password);
-                if(uvm != null)
+                if (uvm != null)
                 {
                     Session["CurrentUserID"] = uvm.UserID;
                     Session["CurrentUserName"] = uvm.Name;
@@ -66,13 +64,13 @@ namespace StackOverflowProject.Controllers
                     Session["CurrentUserPassword"] = uvm.Password;
                     Session["CurrentUserIsAdmin"] = uvm.IsAdmin;
 
-                    if(uvm.IsAdmin)
+                    if (uvm.IsAdmin)
                     {
                         return RedirectToRoute(new { area = "admin", controller = "AdminHome", action = "Index" });
                     }
                     else
                     {
-                        return RedirectToRoute("Index", "Home");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else
@@ -127,8 +125,8 @@ namespace StackOverflowProject.Controllers
         {
             int uid = Convert.ToInt32(Session["CurrentUserID"]);
             UserViewModel uvm = this.us.GetUsersByUserID(uid);
-            EditUserPasswordViewModel eudpvm = new EditUserPasswordViewModel() { Email = uvm.Email, Password = "", ConfirmPassword = "", UserID = uvm.UserID };
-            return View(eudpvm);
+            EditUserPasswordViewModel eupvm = new EditUserPasswordViewModel() { Email = uvm.Email, Password = "", ConfirmPassword = "", UserID = uvm.UserID };
+            return View(eupvm);
         }
 
         [HttpPost]
@@ -150,3 +148,6 @@ namespace StackOverflowProject.Controllers
         }
     }
 }
+
+
+

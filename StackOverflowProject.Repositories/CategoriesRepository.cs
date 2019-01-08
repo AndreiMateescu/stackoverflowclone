@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StackOverflowProject.DomainModels;
 
 namespace StackOverflowProject.Repositories
 {
     public interface ICategoriesRepository
     {
-        void InsertCategory(Category category);
-        void UpdateCategory(Category category);
-        void DeleteCategory(int categoryID);
+        void InsertCategory(Category c);
+        void UpdateCategory(Category c);
+        void DeleteCategory(int cid);
         List<Category> GetCategories();
-        List<Category> GetCategoryByCategoryID(int categoryID);
+        List<Category> GetCategoryByCategoryID(int CategoryID);
     }
-
     public class CategoriesRepository : ICategoriesRepository
     {
         StackOverflowDatabaseDbContext db;
@@ -25,40 +22,41 @@ namespace StackOverflowProject.Repositories
             db = new StackOverflowDatabaseDbContext();
         }
 
-        public void DeleteCategory(int categoryID)
+        public void InsertCategory(Category c)
         {
-            var category = db.Categories.Where(temp => temp.CategoryID == categoryID).FirstOrDefault();
-            if(category != null)
-            {
-                db.Categories.Remove(category);
-                db.SaveChanges();
-            }
-        }
-
-        public List<Category> GetCategories()
-        {
-            return db.Categories.ToList();
-        }
-
-        public List<Category> GetCategoryByCategoryID(int categoryID)
-        {
-            return db.Categories.Where(temp => temp.CategoryID == categoryID).ToList();
-        }
-
-        public void InsertCategory(Category category)
-        {
-            db.Categories.Add(category);
+            db.Categories.Add(c);
             db.SaveChanges();
         }
 
-        public void UpdateCategory(Category category)
+        public void UpdateCategory(Category c)
         {
-            Category ct = db.Categories.Where(temp => temp.CategoryID == category.CategoryID).FirstOrDefault();
-            if(ct != null)
+            Category ct = db.Categories.Where(temp => temp.CategoryID == c.CategoryID).FirstOrDefault();
+            if (ct != null)
             {
-                ct.CategoryName = category.CategoryName;
+                ct.CategoryName = c.CategoryName;
                 db.SaveChanges();
             }
         }
+        public void DeleteCategory(int cid)
+        {
+            Category ct = db.Categories.Where(temp => temp.CategoryID == cid).FirstOrDefault();
+            if (ct != null)
+            {
+                db.Categories.Remove(ct);
+                db.SaveChanges();
+            }
+        }
+        public List<Category> GetCategories()
+        {
+            List<Category> ct = db.Categories.ToList();
+            return ct;
+        }
+        public List<Category> GetCategoryByCategoryID(int CategoryID)
+        {
+            List<Category> ct = db.Categories.Where(temp => temp.CategoryID == CategoryID).ToList();
+            return ct;
+        }
     }
 }
+
+

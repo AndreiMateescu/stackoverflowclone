@@ -18,3 +18,5 @@ namespace StackOverflowProject.ViewModels
         public bool IsAdmin { get; set; }
     }
 }
+
+

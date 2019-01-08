@@ -10,7 +10,6 @@ namespace StackOverflowProject.ViewModels
 {
     public class EditUserPasswordViewModel
     {
-        [Required]
         public int UserID { get; set; }
 
         [Required]
@@ -24,3 +23,5 @@ namespace StackOverflowProject.ViewModels
         public string ConfirmPassword { get; set; }
     }
 }
+
+

@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StackOverflowProject.DomainModels;
 
 namespace StackOverflowProject.Repositories
 {
     public interface IUsersRepository
     {
-        void InsertUser(User user);
-        void UpdateUserDetails(User user);
-        void UpdateUserPassword(User user);
-        void DeleteUser(int userID);
+        void InsertUser(User u);
+        void UpdateUserDetails(User u);
+        void UpdateUserPassword(User u);
+        void DeleteUser(int uid);
         List<User> GetUsers();
-        List<User> GetUsersByEmailAndPassword(string email, string password);
-        List<User> GetUsersByEmail(string email);
-        List<User> GetUsersbyUserID(int userID);
+        List<User> GetUsersByEmailAndPassword(string Email, string Password);
+        List<User> GetUsersByEmail(string Email);
+        List<User> GetUsersByUserID(int UserID);
         int GetLatestUserID();
     }
-
     public class UsersRepository : IUsersRepository
     {
         StackOverflowDatabaseDbContext db;
@@ -29,67 +26,73 @@ namespace StackOverflowProject.Repositories
             db = new StackOverflowDatabaseDbContext();
         }
 
-        public void DeleteUser(int userID)
+        public void InsertUser(User u)
         {
-            var user = db.Users.Where(u => u.UserID == userID).SingleOrDefault();
+            db.Users.Add(u);
+            db.SaveChanges();
+        }
 
-            if(user != null)
+        public void UpdateUserDetails(User u)
+        {
+            User us = db.Users.Where(temp => temp.UserID == u.UserID).FirstOrDefault();
+            if (us != null)
             {
-                db.Users.Remove(user);
+                us.Name = u.Name;
+                us.Mobile = u.Mobile;
                 db.SaveChanges();
             }
         }
 
-        public int GetLatestUserID()
+        public void UpdateUserPassword(User u)
         {
-            return db.Users.Select(temp => temp.UserID).Max();
+            User us = db.Users.Where(temp => temp.UserID == u.UserID).FirstOrDefault();
+            if (us != null)
+            {
+                us.PasswordHash = u.PasswordHash;
+                db.SaveChanges();
+            }
+        }
+
+        public void DeleteUser(int uid)
+        {
+            User us = db.Users.Where(temp => temp.UserID == uid).FirstOrDefault();
+            if (us != null)
+            {
+                db.Users.Remove(us);
+                db.SaveChanges();
+            }
         }
 
         public List<User> GetUsers()
         {
-            return db.Users.Where(temp => temp.IsAdmin == false).OrderBy(temp => temp.Name).ToList();
+            List<User> us = db.Users.Where(temp => temp.IsAdmin == false).OrderBy(temp => temp.Name).ToList();
+            return us;
         }
 
-        public List<User> GetUsersByEmail(string email)
+        public List<User> GetUsersByEmailAndPassword(string Email, string PasswordHash)
         {
-            return db.Users.Where(temp => temp.Email.Equals(email)).ToList();
+            List<User> us = db.Users.Where(temp => temp.Email == Email && temp.PasswordHash == PasswordHash).ToList();
+            return us;
         }
 
-        public List<User> GetUsersByEmailAndPassword(string email, string password)
+        public List<User> GetUsersByEmail(string Email)
         {
-            return db.Users.Where(temp => temp.Email.Equals(email) && temp.PasswordHash.Equals(password)).ToList();
+            List<User> us = db.Users.Where(temp => temp.Email == Email).ToList();
+            return us;
         }
 
-        public List<User> GetUsersbyUserID(int userID)
+        public List<User> GetUsersByUserID(int UserID)
         {
-            return db.Users.Where(temp => temp.UserID == userID).ToList();
+            List<User> us = db.Users.Where(temp => temp.UserID == UserID).ToList();
+            return us;
         }
 
-        public void InsertUser(User user)
+        public int GetLatestUserID()
         {
-            db.Users.Add(user);
-            db.SaveChanges();
-        }
-
-        public void UpdateUserDetails(User user)
-        {
-            User us = db.Users.Where(temp => temp.UserID == user.UserID).FirstOrDefault();
-            if(us != null)
-            {
-                us.Name = user.Name;
-                us.Mobile = user.Mobile;
-                db.SaveChanges();
-            }
-        }
-
-        public void UpdateUserPassword(User user)
-        {
-            User us = db.Users.Where(temp => temp.UserID == user.UserID).FirstOrDefault();
-            if (us != null)
-            {
-                us.PasswordHash = user.PasswordHash;
-                db.SaveChanges();
-            }
+            int uid = db.Users.Select(temp => temp.UserID).Max();
+            return uid;
         }
     }
 }
+
+

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
 
 namespace StackOverflowProject.DomainModels
@@ -16,3 +14,5 @@ namespace StackOverflowProject.DomainModels
         public DbSet<Vote> Votes { get; set; }
     }
 }
+
+

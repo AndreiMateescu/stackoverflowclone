@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DB9E8CB8-7FCA-4023-94B9-D2A10E579495}</ProjectGuid>
+    <ProjectGuid>{52732E4F-D364-4A84-B2ED-A2417377FCBE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StackOverflowProject.Repositories</RootNamespace>
     <AssemblyName>StackOverflowProject.Repositories</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StackOverflowProject.DomainModels\StackOverflowProject.DomainModels.csproj">
-      <Project>{10bc3724-ca05-4068-af4d-9c2dba1a1da6}</Project>
+      <Project>{17b072b6-d999-4209-b411-734e4ae869a4}</Project>
       <Name>StackOverflowProject.DomainModels</Name>
     </ProjectReference>
   </ItemGroup>

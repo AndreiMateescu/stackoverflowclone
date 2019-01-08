@@ -18,13 +18,18 @@ namespace StackOverflowProject.ApiControllers
             this.us = us;
         }
 
-        public string Get(string email)
+        public string Get(string Email)
         {
-            if (this.us.GetUsersByEmail(email) != null)
+            if (this.us.GetUsersByEmail(Email) != null)
             {
                 return "Found";
             }
-            return "Not found";
+            else
+            {
+                return "Not Found";
+            }
         }
     }
 }
+
+

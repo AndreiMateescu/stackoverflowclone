@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StackOverflowProject.DomainModels;
+using StackOverflowProject.ViewModels;
 using StackOverflowProject.Repositories;
 using AutoMapper;
 using AutoMapper.Configuration;
-using StackOverflowProject.ViewModels;
 
 namespace StackOverflowProject.ServiceLayer
 {
@@ -18,11 +16,10 @@ namespace StackOverflowProject.ServiceLayer
         void UpdateUserPassword(EditUserPasswordViewModel uvm);
         void DeleteUser(int uid);
         List<UserViewModel> GetUsers();
-        UserViewModel GetUsersByEmailAndPassword(string email, string password);
-        UserViewModel GetUsersByEmail(string email);
-        UserViewModel GetUsersByUserID(int userID);
+        UserViewModel GetUsersByEmailAndPassword(string Email, string Password);
+        UserViewModel GetUsersByEmail(string Email);
+        UserViewModel GetUsersByUserID(int UserID);
     }
-
     public class UsersService : IUsersService
     {
         IUsersRepository ur;
@@ -32,64 +29,11 @@ namespace StackOverflowProject.ServiceLayer
             ur = new UsersRepository();
         }
 
-        public void DeleteUser(int uid)
-        {
-            ur.DeleteUser(uid);
-        }
-
-        public List<UserViewModel> GetUsers()
-        {
-            List<User> u = ur.GetUsers();
-            var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
-            IMapper mapper = config.CreateMapper();
-            List<UserViewModel> uvm = mapper.Map<List<User>, List<UserViewModel>>(u);
-            return uvm;
-        }
-
-        public UserViewModel GetUsersByEmail(string email)
-        {
-            User u = ur.GetUsersByEmail(email).FirstOrDefault();
-            UserViewModel uvm = null;
-            if (u != null)
-            {
-                var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
-                IMapper mapper = config.CreateMapper();
-                uvm = mapper.Map<User, UserViewModel>(u);
-            }
-            return uvm;
-        }
-
-        public UserViewModel GetUsersByEmailAndPassword(string email, string password)
-        {
-            User u = ur.GetUsersByEmailAndPassword(email, SHA256HashGenerator.GenerateHash(password)).FirstOrDefault();
-            UserViewModel uvm = null;
-            if(u != null)
-            {
-                var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
-                IMapper mapper = config.CreateMapper();
-                uvm = mapper.Map<User, UserViewModel>(u);
-            }
-            return uvm;
-        }
-
-        public UserViewModel GetUsersByUserID(int userID)
-        {
-            User u = ur.GetUsersbyUserID(userID).FirstOrDefault();
-            UserViewModel uvm = null;
-            if (u != null)
-            {
-                var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
-                IMapper mapper = config.CreateMapper();
-                uvm = mapper.Map<User, UserViewModel>(u);
-            }
-            return uvm;
-        }
-
         public int InsertUser(RegisterViewModel uvm)
         {
-            var config = new MapperConfiguration(cfg => { cfg.CreateMap<RegisterViewModel, User>(); cfg.IgnoreUnmapped(); });
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<RegisterViewModel, User>(); cfg.IgnoreUnmapped(); } );
             IMapper mapper = config.CreateMapper();
-            User u = mapper.Map<RegisterViewModel, User> (uvm);
+            User u = mapper.Map<RegisterViewModel, User>(uvm);
             u.PasswordHash = SHA256HashGenerator.GenerateHash(uvm.Password);
             ur.InsertUser(u);
             int uid = ur.GetLatestUserID();
@@ -112,5 +56,60 @@ namespace StackOverflowProject.ServiceLayer
             u.PasswordHash = SHA256HashGenerator.GenerateHash(uvm.Password);
             ur.UpdateUserPassword(u);
         }
+
+        public void DeleteUser(int uid)
+        {
+            ur.DeleteUser(uid);
+        }
+
+        public List<UserViewModel> GetUsers()
+        {
+            List<User> u = ur.GetUsers();
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
+            IMapper mapper = config.CreateMapper();
+            List<UserViewModel> uvm = mapper.Map<List<User>, List<UserViewModel>>(u);
+            return uvm;
+        }
+
+        public UserViewModel GetUsersByEmailAndPassword(string Email, string Password)
+        {
+            User u = ur.GetUsersByEmailAndPassword(Email, SHA256HashGenerator.GenerateHash(Password)).FirstOrDefault();
+            UserViewModel uvm = null;
+            if (u != null)
+            {
+                var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
+                IMapper mapper = config.CreateMapper();
+                uvm = mapper.Map<User, UserViewModel>(u);
+            }
+            return uvm;
+        }
+
+        public UserViewModel GetUsersByEmail(string Email)
+        {
+            User u = ur.GetUsersByEmail(Email).FirstOrDefault();
+            UserViewModel uvm = null;
+            if (u != null)
+            {
+                var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
+                IMapper mapper = config.CreateMapper();
+                uvm = mapper.Map<User, UserViewModel>(u);
+            }
+            return uvm;
+        }
+
+        public UserViewModel GetUsersByUserID(int UserID)
+        {
+            User u = ur.GetUsersByUserID(UserID).FirstOrDefault();
+            UserViewModel uvm = null;
+            if (u != null)
+            {
+                var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
+                IMapper mapper = config.CreateMapper();
+                uvm = mapper.Map<User, UserViewModel>(u);
+            }
+            return uvm;
+        }
     }
 }
+
+
