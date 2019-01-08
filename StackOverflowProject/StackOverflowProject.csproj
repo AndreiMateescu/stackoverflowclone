@@ -240,6 +240,7 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Home\Categories.cshtml" />
     <Content Include="Views\Home\Questions.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

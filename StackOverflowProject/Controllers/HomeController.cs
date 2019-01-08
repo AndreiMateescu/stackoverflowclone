@@ -44,5 +44,11 @@ namespace StackOverflowProject.Controllers
         {
             return View(this.qs.GetQuestions());
         }
+
+        public ActionResult Search(string str)
+        {
+            ViewBag.str = str;
+            return View(this.qs.GetQuestions().Where(temp => temp.QuestionName.ToLower().Contains(str.ToLower()) || temp.Category.CategoryName.ToLower().Contains(str.ToLower())).ToList());
+        }
     }
 }
