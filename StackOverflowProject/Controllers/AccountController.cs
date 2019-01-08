@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using StackOverflowProject.ViewModels;
 using StackOverflowProject.ServiceLayer;
+using StackOverflowProject.CustomFilters;
 
 namespace StackOverflowProject.Controllers
 {
@@ -93,6 +94,7 @@ namespace StackOverflowProject.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [UserAuthorizationFilterAttribute]
         public ActionResult ChangeProfile()
         {
             int uid = Convert.ToInt32(Session["CurrentUserID"]);
@@ -103,6 +105,7 @@ namespace StackOverflowProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [UserAuthorizationFilterAttribute]
         public ActionResult ChangeProfile(EditUserDetailsViewModel eudvm)
         {
             if (ModelState.IsValid)
@@ -119,6 +122,7 @@ namespace StackOverflowProject.Controllers
             }
         }
 
+        [UserAuthorizationFilterAttribute]
         public ActionResult ChangePassword()
         {
             int uid = Convert.ToInt32(Session["CurrentUserID"]);
@@ -129,6 +133,7 @@ namespace StackOverflowProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [UserAuthorizationFilterAttribute]
         public ActionResult ChangePassword(EditUserPasswordViewModel eupvm)
         {
             if (ModelState.IsValid)
