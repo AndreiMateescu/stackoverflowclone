@@ -203,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\AccountController.cs" />
+    <Compile Include="ApiControllers\QuestionsController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
